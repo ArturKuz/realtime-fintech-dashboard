@@ -9,7 +9,15 @@
     "test:watch": "ng test",
     "lint": "eslint .",
     "format": "prettier --write . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
-    "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude"
+    "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,mjs,html}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{scss,css,json,md,yml,yaml}": "prettier --write"
   },
   "private": true,
   "packageManager": "pnpm@12.15.0",
@@ -30,11 +38,15 @@
     "@angular/build": "^22.2.4",
     "@angular/cli": "^22.2.4",
     "@angular/compiler-cli": "^22.2.0",
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
     "@eslint/js": "^10.0.1",
     "angular-eslint": "22.6.0",
     "eslint": "10.13.0",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "9.1.7",
     "jsdom": "^30.0.0",
+    "lint-staged": "17.6.0",
     "prettier": "3.9.10",
     "typescript": "~6.0.2",
     "typescript-eslint": "8.72.0",

@@ -1,0 +1,6 @@
+pnpm exec commitlint --edit "$1"
+
+# Optional machine-local hook, not part of the repository.
+if [ -f .dev/hooks/commit-msg ]; then
+  sh .dev/hooks/commit-msg "$1"
+fi
