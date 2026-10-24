@@ -1,2 +1,27 @@
-<h1>Realtime Fintech Dashboard</h1>
-<router-outlet />
+<a class="skip-link" href="#main-content" (click)="skipToMain($event)">Skip to main content</a>
+
+<header class="app-header">
+  <div class="app-header__inner">
+    <a class="brand t-condensed" routerLink="/dashboard">Realtime Fintech Dashboard</a>
+
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        @for (link of links; track link.path) {
+          <li>
+            <a
+              class="nav-link"
+              [routerLink]="link.path"
+              routerLinkActive="nav-link--active"
+              ariaCurrentWhenActive="page"
+              >{{ link.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main #main id="main-content" class="app-main" tabindex="-1">
+  <router-outlet />
+</main>
