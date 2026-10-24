@@ -1,37 +1,10 @@
 import { UPDATE_FIELD, UPDATE_STRIDE } from '@core/protocol/market-update-layout.constants';
 import { type SnapshotRow } from '@core/protocol/messages.model';
-
-/**
- * Everything kept per instrument for the current run. Cumulative metrics need only two running
- * sums, so no trade history is stored.
- */
-export interface InstrumentState {
-  readonly lastPriceCents: number | null;
-  readonly bidCents: number | null;
-  readonly askCents: number | null;
-  readonly bidQty: number | null;
-  readonly askQty: number | null;
-  /** Σ trade quantity since the run started. */
-  readonly volume: bigint;
-  /** Σ (trade price in cents × trade quantity) since the run started. */
-  readonly notional: bigint;
-}
-
-/** One entry per instrument, indexed by the generator's instrument index. */
-export type MarketState = readonly InstrumentState[];
-
-const EMPTY_INSTRUMENT: InstrumentState = {
-  lastPriceCents: null,
-  bidCents: null,
-  askCents: null,
-  bidQty: null,
-  askQty: null,
-  volume: 0n,
-  notional: 0n,
-};
+import { EMPTY_INSTRUMENT_STATE } from './aggregator.constants';
+import { type InstrumentState, type MarketState } from './aggregator.model';
 
 export function createMarketState(instrumentCount: number): MarketState {
-  return Array.from({ length: instrumentCount }, () => EMPTY_INSTRUMENT);
+  return Array.from({ length: instrumentCount }, () => EMPTY_INSTRUMENT_STATE);
 }
 
 /**

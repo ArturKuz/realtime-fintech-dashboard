@@ -1,11 +1,6 @@
 import { UPDATE_FIELD, UPDATE_STRIDE } from '@core/protocol/market-update-layout.constants';
-import {
-  aggregateBatch,
-  createMarketState,
-  type InstrumentState,
-  type MarketState,
-  toSnapshotRows,
-} from './aggregator';
+import { aggregateBatch, createMarketState, toSnapshotRows } from './aggregator';
+import { type InstrumentState, type MarketState } from './aggregator.model';
 
 interface Update {
   instrument: number;
