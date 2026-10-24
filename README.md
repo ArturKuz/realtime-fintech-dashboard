@@ -41,7 +41,8 @@ Every push runs [GitHub Actions](.github/workflows/ci.yml): install → lint →
 production build. A green build of `main` is then deployed to GitHub Pages automatically; other
 branches and pull requests only run the checks, so a broken change never reaches the live demo.
 
-Live demo: _link added after the first deployment_.
+- Live demo: <https://arturkuz.github.io/realtime-fintech-dashboard/>
+- Repository: <https://github.com/ArturKuz/realtime-fintech-dashboard>
 
 Two GitHub Pages details are handled by `pnpm build:pages`:
 
