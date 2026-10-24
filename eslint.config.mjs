@@ -5,6 +5,16 @@ import prettier from 'eslint-config-prettier';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
+// File conventions: imports across folders go through path aliases, never "../".
+const noParentImports = {
+  group: ['../*'],
+  message: 'Use a path alias (@core, @shared, @features, @worker, @testing) instead of "../".',
+};
+const noTestingInAppCode = {
+  group: ['@testing/*'],
+  message: 'Test builders, fixtures and fakes may only be imported from spec files.',
+};
+
 export default defineConfig([
   globalIgnores(['dist/', 'coverage/', '.angular/', 'public/']),
   {
@@ -44,6 +54,39 @@ export default defineConfig([
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      'no-restricted-imports': ['error', { patterns: [noParentImports] }],
+    },
+  },
+  {
+    // Application code must not depend on test-only code.
+    files: ['src/app/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'no-restricted-imports': ['error', { patterns: [noParentImports, noTestingInAppCode] }],
+    },
+  },
+  {
+    files: ['**/*.model.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'FunctionDeclaration, VariableDeclaration, ClassDeclaration',
+          message: 'Model files hold interfaces and types only.',
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.constants.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'FunctionDeclaration, ArrowFunctionExpression, FunctionExpression',
+          message: 'Constant files hold values only; move functions to a *.utils.ts file.',
+        },
+      ],
     },
   },
   {
