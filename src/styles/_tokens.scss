@@ -1,0 +1,66 @@
+// Design tokens: the only place where raw colors, sizes and spacing are defined.
+// Contrast ratios (WCAG 2.x) are measured against --color-bg / --color-surface / --color-surface-raised.
+
+:root {
+  color-scheme: dark;
+
+  // Surfaces: deep "trading floor" navy, from back to front.
+  --color-bg: #0e1726;
+  --color-surface: #152238;
+  --color-surface-raised: #1e2e4a;
+
+  // Text. text 15.2 / 13.5 / 11.5; muted 8.1 / 7.2 / 6.2.
+  --color-text: #e6edf7;
+  --color-text-muted: #9db0cc;
+  --color-text-on-accent: #0e1726; // on --color-accent: 10.1
+
+  // Terminal amber: brand and instrument symbols. 10.1 / 9.0 / 7.7.
+  --color-accent: #f5b841;
+
+  // Direction of a value (imbalance sign, price moves). Never the only signal: always paired with text.
+  --color-positive: #4fd1a5; // 9.4 / 8.3 / 7.1
+  --color-negative: #ff8a80; // 7.9 / 7.0 / 6.0
+
+  // Focus ring: deliberately not the accent, so focus never looks like data. 9.9 / 8.8 / 7.5.
+  --color-focus: #8ec5ff;
+
+  // Lines. border is decorative (dividers); border-strong bounds controls (WCAG 1.4.11 needs 3:1): 4.1 / 3.7 / 3.1.
+  --color-border: #33476b;
+  --color-border-strong: #627a9f;
+
+  // Spacing scale (4px base).
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  // Radii: small for controls, slightly larger for panels.
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  // Type. One variable family; the condensed style comes from its width axis.
+  --font-family: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-stretch-condensed: 80%;
+
+  // Classic scale: 12 / 14 / 16 / 18 / 21 / 24 / 36 px.
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.3125rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2.25rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+
+  --content-max-width: 72rem;
+}

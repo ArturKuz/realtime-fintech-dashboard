@@ -1,0 +1,58 @@
+// Typography: base text styles and utility classes. Components use these instead of their own sizes.
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-semibold);
+}
+
+p {
+  margin: 0;
+  max-width: 70ch;
+}
+
+// Page title (one per page).
+.t-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+// Section heading inside a page.
+.t-heading {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.t-body {
+  font-size: var(--font-size-md);
+}
+
+.t-small {
+  font-size: var(--font-size-sm);
+}
+
+.t-muted {
+  color: var(--color-text-muted);
+}
+
+// Figures that update live: equal-width digits so columns do not jitter.
+.t-numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+// Instrument symbols and table headers: the narrow width of the same family.
+.t-condensed {
+  font-stretch: var(--font-stretch-condensed);
+}
