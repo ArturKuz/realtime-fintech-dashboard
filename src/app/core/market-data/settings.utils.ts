@@ -1,31 +1,5 @@
-export interface ProducerSettings {
-  /** Number of fictional instruments to generate data for. */
-  readonly instrumentCount: number;
-  /** Total market updates per batch, across all instruments. */
-  readonly updatesPerBatch: number;
-  /** Requested time between batches, in milliseconds. */
-  readonly intervalMs: number;
-}
-
-export type SettingKey = keyof ProducerSettings;
-
-export interface SettingLimits {
-  readonly min: number;
-  readonly max: number;
-}
-
-/** The single source of truth for allowed values: used by form validation and by the worker. */
-export const SETTINGS_LIMITS: Readonly<Record<SettingKey, SettingLimits>> = {
-  instrumentCount: { min: 1, max: 50 },
-  updatesPerBatch: { min: 1, max: 1000 },
-  intervalMs: { min: 50, max: 2000 },
-};
-
-export const DEFAULT_SETTINGS: ProducerSettings = {
-  instrumentCount: 5,
-  updatesPerBatch: 100,
-  intervalMs: 500,
-};
+import { DEFAULT_SETTINGS, SETTINGS_LIMITS } from './settings.constants';
+import { type ProducerSettings, type SettingKey } from './settings.model';
 
 /** Requested updates per second across all instruments. */
 export function nominalRate(settings: ProducerSettings): number {

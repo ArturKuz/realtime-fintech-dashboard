@@ -1,7 +1,7 @@
-import { INSTRUMENT_SYMBOLS, symbolOf } from './instruments';
-import { SETTINGS_LIMITS } from './settings';
+import { INSTRUMENT_SYMBOLS } from './instruments.constants';
+import { SETTINGS_LIMITS } from './settings.constants';
 
-describe('instrument symbols', () => {
+describe('INSTRUMENT_SYMBOLS', () => {
   it('has one symbol for every instrument the settings allow', () => {
     expect(INSTRUMENT_SYMBOLS).toHaveLength(SETTINGS_LIMITS.instrumentCount.max);
   });
@@ -15,16 +15,5 @@ describe('instrument symbols', () => {
     for (const symbol of INSTRUMENT_SYMBOLS) {
       expect(symbol).toMatch(/^[A-Z]{4}$/);
     }
-  });
-
-  it('maps an instrument index from the generator to its symbol', () => {
-    expect(symbolOf(0)).toBe('ALFA');
-    expect(symbolOf(1)).toBe('BETA');
-    expect(symbolOf(49)).toBe(INSTRUMENT_SYMBOLS[49]);
-  });
-
-  it('fails loudly for an index outside the list', () => {
-    expect(() => symbolOf(50)).toThrow(RangeError);
-    expect(() => symbolOf(-1)).toThrow(RangeError);
   });
 });

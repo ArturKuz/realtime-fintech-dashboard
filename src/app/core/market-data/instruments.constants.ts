@@ -10,11 +10,3 @@ export const INSTRUMENT_SYMBOLS: readonly string[] = [
   'AXIS', 'BLUE', 'CORE', 'DAWN', 'EDGE', 'FERN', 'GLOW', 'HAWK', 'ISLE', 'JOLT',
   'KELP', 'LOOM', 'MINT', 'NEST', 'OPAL', 'PEAK', 'REEF', 'SILK', 'TUSK', 'VALE',
 ];
-
-export function symbolOf(index: number): string {
-  const symbol = INSTRUMENT_SYMBOLS[index];
-  if (symbol === undefined) {
-    throw new RangeError(`No instrument symbol for index ${index}`);
-  }
-  return symbol;
-}

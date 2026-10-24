@@ -1,4 +1,4 @@
-import { type ProducerSettings } from '../market-data/settings';
+import { type ProducerSettings } from '@core/market-data/settings.model';
 
 // Angular → worker
 
