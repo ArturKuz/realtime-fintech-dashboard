@@ -1,0 +1,8 @@
+/* Node-side TypeScript: the Wasm generator tests and their Vitest config. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["vitest.wasm.config.ts", "wasm/test/**/*.ts"]
+}

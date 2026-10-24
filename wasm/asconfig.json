@@ -1,0 +1,13 @@
+{
+  "targets": {
+    "release": {
+      "outFile": "../public/wasm/generator.wasm",
+      "optimizeLevel": 3,
+      "shrinkLevel": 0
+    }
+  },
+  "options": {
+    "runtime": "stub",
+    "use": ["abort="]
+  }
+}

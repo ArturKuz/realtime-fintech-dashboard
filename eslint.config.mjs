@@ -19,6 +19,7 @@ export default defineConfig([
   globalIgnores(['dist/', 'coverage/', '.angular/', 'public/']),
   {
     files: ['**/*.ts'],
+    ignores: ['wasm/assembly/**'],
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
@@ -55,6 +56,17 @@ export default defineConfig([
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       'no-restricted-imports': ['error', { patterns: [noParentImports] }],
+    },
+  },
+  {
+    // AssemblyScript: TypeScript syntax, but i32/u32/u64 are distinct machine types, not `number`.
+    // Casts like <u64>x are real conversions, so type-aware TS rules would wrongly call them
+    // unnecessary and `--fix` would delete them, changing the generator's arithmetic.
+    files: ['wasm/assembly/**/*.ts'],
+    extends: [eslint.configs.recommended, tseslint.configs.recommended],
+    rules: {
+      '@typescript-eslint/consistent-type-assertions': 'off',
+      'prefer-const': 'error',
     },
   },
   {
