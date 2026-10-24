@@ -1,4 +1,4 @@
-import { UPDATE_FIELD, UPDATE_STRIDE } from '../core/protocol/market-update-layout';
+import { UPDATE_FIELD, UPDATE_STRIDE } from '@core/protocol/market-update-layout.constants';
 import {
   aggregateBatch,
   createMarketState,

@@ -1,4 +1,5 @@
-import { isWorkerMessage, type SnapshotRow } from './messages';
+import { isWorkerMessage } from './messages.guards';
+import { type SnapshotRow } from './messages.model';
 
 const row: SnapshotRow = {
   instrument: 0,

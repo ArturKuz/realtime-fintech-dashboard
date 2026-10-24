@@ -1,5 +1,5 @@
-import { UPDATE_FIELD, UPDATE_STRIDE } from '../core/protocol/market-update-layout';
-import { type SnapshotRow } from '../core/protocol/messages';
+import { UPDATE_FIELD, UPDATE_STRIDE } from '@core/protocol/market-update-layout.constants';
+import { type SnapshotRow } from '@core/protocol/messages.model';
 
 /**
  * Everything kept per instrument for the current run. Cumulative metrics need only two running

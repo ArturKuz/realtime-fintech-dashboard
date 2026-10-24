@@ -1,4 +1,4 @@
-import { UPDATE_FIELD, UPDATE_STRIDE } from './market-update-layout';
+import { UPDATE_FIELD, UPDATE_STRIDE } from './market-update-layout.constants';
 
 describe('market update layout', () => {
   it('describes the 7 values the generator writes per update, in order', () => {
