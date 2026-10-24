@@ -51,6 +51,34 @@ Two GitHub Pages details are handled by `pnpm build:pages`:
   `scripts/copy-404.mjs` copies `index.html` to `404.html`; Pages serves it for unknown paths, the
   app boots and the router shows the right page.
 
+## Project structure
+
+```
+src/app/
+  core/       app-wide domain and singletons (producer settings, message protocol)
+  shared/     reusable UI and pure helpers (display formatting)
+  features/   pages: dashboard, settings
+  worker/     Web Worker logic (batch aggregation)
+src/testing/  test-only builders, fixtures and helpers (never part of the app bundle)
+src/styles/   design tokens, typography, mixins
+```
+
+File conventions, enforced by ESLint:
+
+| File               | Contains                                            |
+| ------------------ | --------------------------------------------------- |
+| `*.model.ts`       | interfaces and types only                           |
+| `*.constants.ts`   | constant values only                                |
+| `*.utils.ts`       | pure functions                                      |
+| `*.guards.ts`      | type guards for data crossing a boundary            |
+| component / domain | logic (e.g. `aggregator.ts`, `app.ts`) and its spec |
+
+- Imports across folders use path aliases (`@core/*`, `@shared/*`, `@features/*`, `@worker/*`,
+  `@testing/*`); `../` imports are rejected. There are no barrel `index.ts` files: the app and the
+  Web Worker are separate bundles, and a barrel that mixes worker-safe code with Angular services
+  would pull Angular into the worker.
+- Only spec files may import from `@testing/*`. Expected values stay written in the test itself.
+
 ## Tooling
 
 - **Angular 22**: standalone components, zoneless change detection, signals.
