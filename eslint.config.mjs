@@ -47,6 +47,14 @@ export default defineConfig([
     },
   },
   {
+    // Node build scripts and tool configs.
+    files: ['**/*.mjs'],
+    extends: [eslint.configs.recommended],
+    languageOptions: {
+      globals: { process: 'readonly', console: 'readonly' },
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
