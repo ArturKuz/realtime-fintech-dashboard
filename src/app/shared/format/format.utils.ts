@@ -1,10 +1,6 @@
 // Display formatting. Values stay exact (integer cents, bigint totals) until they reach this file;
 // rounding happens here and nowhere else.
-
-/** Shown for any value that is unavailable (no data yet, or a zero denominator). */
-export const UNAVAILABLE = '—';
-
-const MINUS_SIGN = '−';
+import { MINUS_SIGN, UNAVAILABLE } from './format.constants';
 
 // Formatters are created once: constructing Intl.NumberFormat is far more expensive than using it.
 const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });

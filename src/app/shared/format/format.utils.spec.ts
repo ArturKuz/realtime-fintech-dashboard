@@ -1,4 +1,5 @@
-import { formatCents, formatImbalance, formatVolume, UNAVAILABLE } from './format';
+import { UNAVAILABLE } from './format.constants';
+import { formatCents, formatImbalance, formatVolume } from './format.utils';
 
 describe('formatCents', () => {
   it('formats the worked example as US dollars', () => {
@@ -66,11 +67,5 @@ describe('formatImbalance', () => {
 
   it('shows the unavailable mark for null', () => {
     expect(formatImbalance(null)).toBe(UNAVAILABLE);
-  });
-});
-
-describe('UNAVAILABLE', () => {
-  it('is an em dash', () => {
-    expect(UNAVAILABLE).toBe('—');
   });
 });
