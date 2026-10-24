@@ -24,16 +24,37 @@ pnpm start          # dev server on http://localhost:4200
 
 ## Scripts
 
-| Script              | What it does                                    |
-| ------------------- | ----------------------------------------------- |
-| `pnpm start`        | Run the dev server with live reload             |
-| `pnpm build`        | Production build into `dist/`                   |
-| `pnpm build:pages`  | Production build for GitHub Pages (see below)   |
-| `pnpm test`         | Run all unit tests once (Vitest)                |
-| `pnpm test:watch`   | Run unit tests in watch mode                    |
-| `pnpm lint`         | ESLint (TypeScript with type information, HTML) |
-| `pnpm format`       | Format all files with Prettier                  |
-| `pnpm format:check` | Check formatting without writing                |
+`start`, `build`, `build:pages` and `test` compile the WebAssembly generator first, so a fresh clone
+needs no extra step. The compiled `public/wasm/generator.wasm` is a build artifact and is not
+committed.
+
+| Script              | What it does                                                      |
+| ------------------- | ----------------------------------------------------------------- |
+| `pnpm start`        | Run the dev server with live reload                               |
+| `pnpm build`        | Production build into `dist/`                                     |
+| `pnpm build:pages`  | Production build for GitHub Pages (see below)                     |
+| `pnpm build:wasm`   | Compile `wasm/assembly/index.ts` to `public/wasm/generator.wasm`  |
+| `pnpm test`         | All unit tests once: Angular suites, then the compiled-Wasm suite |
+| `pnpm test:watch`   | Angular unit tests in watch mode                                  |
+| `pnpm test:wasm`    | Only the generator tests, against the compiled module (Node)      |
+| `pnpm lint`         | ESLint (TypeScript with type information, HTML, AssemblyScript)   |
+| `pnpm format`       | Format all files with Prettier                                    |
+| `pnpm format:check` | Check formatting without writing                                  |
+
+## Market data generator (WebAssembly)
+
+The generator is written in [AssemblyScript](https://www.assemblyscript.org/) (`wasm/assembly/index.ts`)
+and compiled to a ~1.3 KB module with **no imports**: random numbers (xorshift32) and price logic run
+entirely inside Wasm.
+
+- `init(instrumentCount, seed)` resets the state; `generate(n)` writes `n` updates into a buffer in
+  Wasm memory and returns its address. Each update is 7 integers:
+  `[instrument, priceCents, tradeQty, bidCents, askCents, bidQty, askQty]`. JavaScript reads them
+  through an `Int32Array` view — no JSON, no copying.
+- Prices are integer cents and follow a random walk (±0.2 % per step) between $1 and $1,000. The
+  bid is always below the ask, and each trade happens at the bid or the ask.
+- Tests (`wasm/test/`) load the **compiled** module with a fixed seed and check batch sizes, every
+  invariant over 100,000 updates, determinism, and that the Wasm limits match the app settings.
 
 ## Deployment
 
