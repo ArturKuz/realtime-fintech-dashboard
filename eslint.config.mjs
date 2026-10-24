@@ -1,4 +1,7 @@
 // @ts-check
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { includeIgnoreFile } from '@eslint/compat';
 import eslint from '@eslint/js';
 import angular from 'angular-eslint';
 import prettier from 'eslint-config-prettier';
@@ -15,8 +18,15 @@ const noTestingInAppCode = {
   message: 'Test builders, fixtures and fakes may only be imported from spec files.',
 };
 
+// Skip whatever git ignores, including machine-local entries in .git/info/exclude.
+const ignoreFiles = ['.gitignore', '.git/info/exclude']
+  .map((file) => fileURLToPath(new URL(file, import.meta.url)))
+  .filter((path) => existsSync(path))
+  .map((path) => includeIgnoreFile(path));
+
 export default defineConfig([
-  globalIgnores(['dist/', 'coverage/', '.angular/', 'public/']),
+  ...ignoreFiles,
+  globalIgnores(['public/']),
   {
     files: ['**/*.ts'],
     ignores: ['wasm/assembly/**'],
@@ -106,7 +116,7 @@ export default defineConfig([
     files: ['**/*.mjs'],
     extends: [eslint.configs.recommended],
     languageOptions: {
-      globals: { process: 'readonly', console: 'readonly' },
+      globals: { process: 'readonly', console: 'readonly', URL: 'readonly' },
     },
   },
   {
