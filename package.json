@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pages": "ng build --base-href /realtime-fintech-dashboard/ && node scripts/copy-404.mjs dist/realtime-fintech-dashboard/browser",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
     "lint": "eslint .",
