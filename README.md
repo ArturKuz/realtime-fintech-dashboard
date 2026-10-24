@@ -28,11 +28,27 @@ pnpm start          # dev server on http://localhost:4200
 | ------------------- | ----------------------------------------------- |
 | `pnpm start`        | Run the dev server with live reload             |
 | `pnpm build`        | Production build into `dist/`                   |
+| `pnpm build:pages`  | Production build for GitHub Pages (see below)   |
 | `pnpm test`         | Run all unit tests once (Vitest)                |
 | `pnpm test:watch`   | Run unit tests in watch mode                    |
 | `pnpm lint`         | ESLint (TypeScript with type information, HTML) |
 | `pnpm format`       | Format all files with Prettier                  |
 | `pnpm format:check` | Check formatting without writing                |
+
+## Deployment
+
+Every push runs [GitHub Actions](.github/workflows/ci.yml): install → lint → format check → tests →
+production build. A green build of `main` is then deployed to GitHub Pages automatically; other
+branches and pull requests only run the checks, so a broken change never reaches the live demo.
+
+Live demo: _link added after the first deployment_.
+
+Two GitHub Pages details are handled by `pnpm build:pages`:
+
+- The site lives under `/realtime-fintech-dashboard/`, so the app is built with that `--base-href`.
+- Pages does not know Angular routes, so reloading `/settings` would return 404.
+  `scripts/copy-404.mjs` copies `index.html` to `404.html`; Pages serves it for unknown paths, the
+  app boots and the router shows the right page.
 
 ## Tooling
 
