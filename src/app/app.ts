@@ -1,10 +1,6 @@
 import { Component, type ElementRef, viewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
-interface NavLink {
-  readonly path: string;
-  readonly label: string;
-}
+import { NAV_LINKS } from './app.constants';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -13,10 +9,7 @@ interface NavLink {
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly links: readonly NavLink[] = [
-    { path: '/dashboard', label: 'Dashboard' },
-    { path: '/settings', label: 'Settings' },
-  ];
+  protected readonly links = NAV_LINKS;
 
   private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');
 
