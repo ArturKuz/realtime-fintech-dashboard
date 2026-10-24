@@ -1,5 +1,37 @@
 import { WORKED_EXAMPLE_SNAPSHOT_ROW } from '@testing/snapshot-row.fixtures';
-import { isWorkerMessage } from './messages.guards';
+import { isWorkerCommand, isWorkerMessage } from './messages.guards';
+
+describe('isWorkerCommand', () => {
+  const start = {
+    type: 'start',
+    runId: 1,
+    instrumentCount: 5,
+    updatesPerBatch: 100,
+    intervalMs: 500,
+    seed: 42,
+  };
+
+  it('accepts every command the app sends', () => {
+    expect(isWorkerCommand(start)).toBe(true);
+    expect(isWorkerCommand({ type: 'pause' })).toBe(true);
+    expect(isWorkerCommand({ type: 'resume' })).toBe(true);
+  });
+
+  it('rejects non-objects, unknown types and messages sent the other way', () => {
+    for (const value of [null, undefined, 'start', 1]) {
+      expect(isWorkerCommand(value)).toBe(false);
+    }
+    expect(isWorkerCommand({ type: 'stop' })).toBe(false);
+    expect(isWorkerCommand({ type: 'ready', runId: 1 })).toBe(false);
+  });
+
+  it('rejects a start command with a missing or non-numeric field', () => {
+    for (const field of ['runId', 'instrumentCount', 'updatesPerBatch', 'intervalMs', 'seed']) {
+      expect(isWorkerCommand({ ...start, [field]: undefined })).toBe(false);
+      expect(isWorkerCommand({ ...start, [field]: '5' })).toBe(false);
+    }
+  });
+});
 
 describe('isWorkerMessage', () => {
   it('accepts every message type the worker sends', () => {
