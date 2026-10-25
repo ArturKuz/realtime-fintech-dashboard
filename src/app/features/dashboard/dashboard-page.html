@@ -1,2 +1,20 @@
 <h1 class="t-title">Market dashboard</h1>
-<p class="t-muted">Live prices for each instrument will appear here.</p>
+
+<app-producer-status
+  [status]="market.status()"
+  [runId]="market.runId()"
+  [settings]="market.appliedSettings()"
+  [nominalRate]="market.nominalRate()"
+  [actualRate]="market.actualRate()"
+  (pauseRequested)="market.pause()"
+  (resumeRequested)="market.resume()"
+/>
+
+@if (market.errorMessage(); as message) {
+  <app-alert heading="Market data stopped">
+    {{ message }}
+    <a routerLink="/settings">Open producer settings</a> to apply them again.
+  </app-alert>
+}
+
+<app-market-table [rows]="market.rows()" />
