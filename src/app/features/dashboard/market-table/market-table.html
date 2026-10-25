@@ -1,0 +1,40 @@
+<div class="market-table__scroll" role="region" tabindex="0" aria-labelledby="market-table-caption">
+  <table class="market-table t-numeric">
+    <caption id="market-table-caption" class="market-table__caption">
+      Live metrics per instrument
+    </caption>
+    <thead>
+      <tr>
+        @for (column of columns; track column.id) {
+          <th
+            scope="col"
+            class="market-table__cell t-condensed"
+            [class.market-table__cell--end]="column.align === 'end'"
+          >
+            {{ column.header }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of displayRows(); track row.instrument) {
+        <tr>
+          @for (cell of row.cells; track $index; let first = $first) {
+            @if (first) {
+              <th scope="row" class="market-table__cell market-table__symbol t-condensed">
+                {{ cell }}
+              </th>
+            } @else {
+              <td
+                class="market-table__cell"
+                [class.market-table__cell--end]="columns[$index]?.align === 'end'"
+              >
+                {{ cell }}
+              </td>
+            }
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

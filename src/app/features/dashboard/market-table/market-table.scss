@@ -1,0 +1,42 @@
+@use 'mixins';
+
+.market-table__scroll {
+  @include mixins.panel;
+
+  overflow-x: auto;
+}
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.market-table__caption {
+  @include mixins.visually-hidden;
+}
+
+.market-table__cell {
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  text-align: start;
+  white-space: nowrap;
+}
+
+thead .market-table__cell {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+tbody tr:last-child .market-table__cell {
+  border-bottom: none;
+}
+
+.market-table__cell--end {
+  text-align: end;
+}
+
+.market-table__symbol {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
