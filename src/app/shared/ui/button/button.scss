@@ -1,0 +1,36 @@
+:host {
+  display: inline-block;
+}
+
+.button {
+  min-height: 2.5rem; // comfortable click/tap target
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.button--secondary {
+  border-color: var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+
+  &:hover:not(:disabled) {
+    filter: none;
+    background: var(--color-surface-raised);
+  }
+}
