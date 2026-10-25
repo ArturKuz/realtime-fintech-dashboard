@@ -1,0 +1,38 @@
+<div class="producer-status__header">
+  <h2 class="t-heading">Producer</h2>
+  <app-status-badge [tone]="badge().tone">{{ badge().label }}</app-status-badge>
+  <app-button
+    class="producer-status__control"
+    variant="secondary"
+    [disabled]="controlDisabled()"
+    (click)="toggle()"
+    >{{ paused() ? 'Resume' : 'Pause' }}</app-button
+  >
+</div>
+
+<dl class="producer-status__details t-small">
+  <div>
+    <dt>Run</dt>
+    <dd class="t-numeric">#{{ runId() }}</dd>
+  </div>
+  <div>
+    <dt>Instruments</dt>
+    <dd class="t-numeric">{{ settings().instrumentCount }}</dd>
+  </div>
+  <div>
+    <dt>Updates per batch</dt>
+    <dd class="t-numeric">{{ settings().updatesPerBatch }}</dd>
+  </div>
+  <div>
+    <dt>Interval</dt>
+    <dd class="t-numeric">{{ settings().intervalMs }} ms</dd>
+  </div>
+  <div>
+    <dt>Requested</dt>
+    <dd class="t-numeric">{{ requestedRate() }}</dd>
+  </div>
+  <div>
+    <dt>Actual</dt>
+    <dd class="t-numeric">{{ measuredRate() }}</dd>
+  </div>
+</dl>
