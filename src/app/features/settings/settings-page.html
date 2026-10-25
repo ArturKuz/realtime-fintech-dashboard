@@ -1,2 +1,24 @@
 <h1 class="t-title">Producer settings</h1>
 <p class="t-muted">Choose how many instruments to simulate and how fast data is generated.</p>
+
+<form class="settings-form" [formRoot]="settingsForm">
+  @for (field of fields; track field.key) {
+    <app-number-field
+      [label]="field.label"
+      [hint]="field.hint"
+      [formField]="settingsForm[field.key]"
+    />
+  }
+
+  <p class="t-small t-muted">Apply starts a new run: all values and totals are cleared.</p>
+
+  <div>
+    <app-button type="submit" [disabled]="settingsForm().invalid()">Apply</app-button>
+  </div>
+</form>
+
+@if (startedRun(); as run) {
+  <app-alert variant="info">
+    Applied. Run #{{ run }} started. <a routerLink="/dashboard">View the dashboard</a>
+  </app-alert>
+}

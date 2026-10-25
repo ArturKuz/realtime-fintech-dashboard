@@ -1,4 +1,16 @@
+@use 'mixins';
+
 :host {
   display: grid;
   gap: var(--space-3);
+}
+
+.settings-form {
+  @include mixins.panel;
+
+  display: grid;
+  gap: var(--space-5);
+  max-width: 36rem;
+  margin-top: var(--space-3);
+  padding: var(--space-5);
 }
