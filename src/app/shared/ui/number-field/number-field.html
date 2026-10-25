@@ -1,0 +1,29 @@
+<label class="number-field__label" [for]="inputId">{{ label() }}</label>
+
+@if (hintText()) {
+  <p class="number-field__hint t-small t-muted" [id]="hintId">{{ hintText() }}</p>
+}
+
+<input
+  #field
+  class="number-field__input t-numeric"
+  type="text"
+  inputmode="numeric"
+  autocomplete="off"
+  [id]="inputId"
+  [value]="text()"
+  [disabled]="disabled()"
+  [attr.aria-required]="required() || null"
+  [attr.aria-invalid]="showErrors() || null"
+  [attr.aria-describedby]="describedBy()"
+  (input)="text.set(field.value)"
+  (blur)="touch.emit()"
+/>
+
+@if (showErrors()) {
+  <ul class="number-field__errors t-small" [id]="errorsId">
+    @for (message of messages(); track message) {
+      <li>{{ message }}</li>
+    }
+  </ul>
+}
