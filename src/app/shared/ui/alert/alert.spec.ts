@@ -40,13 +40,14 @@ describe('Alert', () => {
     );
   });
 
-  it('announces information politely with role="status"', async () => {
+  it('leaves announcing information to a live region the page keeps in place', async () => {
     const { host, alert, update } = await render();
 
     host.variant.set('info');
     await update();
 
-    expect(alert.getAttribute('role')).toBe('status');
+    // A status region inserted together with its text is often not announced.
+    expect(alert.hasAttribute('role')).toBe(false);
     expect(alert.classList).toContain('alert--info');
     expect(alert.classList).not.toContain('alert--error');
   });

@@ -17,8 +17,11 @@
   </div>
 </form>
 
-@if (startedRun(); as run) {
-  <app-alert variant="info">
-    Applied. Run #{{ run }} started. <a routerLink="/dashboard">View the dashboard</a>
-  </app-alert>
-}
+<!-- Present from the start, so screen readers announce the confirmation when it appears. -->
+<div role="status">
+  @if (startedRun(); as run) {
+    <app-alert variant="info">
+      Applied. Run #{{ run }} started. <a routerLink="/dashboard">View the dashboard</a>
+    </app-alert>
+  }
+</div>

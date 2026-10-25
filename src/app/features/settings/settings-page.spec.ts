@@ -109,10 +109,17 @@ describe('SettingsPage', () => {
       updatesPerBatch: 1000,
       intervalMs: 50,
     });
-    const confirmation = root.querySelector('app-alert');
-    expect(confirmation?.getAttribute('role')).toBe('status');
+    const confirmation = root.querySelector('[role="status"] app-alert');
     expect(confirmation?.textContent).toContain('Run #2 started');
     expect(confirmation?.querySelector('a')?.getAttribute('href')).toBe('/dashboard');
+  });
+
+  it('keeps an empty live region in place before Apply, so the confirmation is announced', async () => {
+    const { root } = await render();
+    const region = root.querySelector('[role="status"]');
+
+    expect(region).not.toBeNull();
+    expect(region?.textContent.trim()).toBe('');
   });
 
   it('shows the newly applied settings after Apply', async () => {
