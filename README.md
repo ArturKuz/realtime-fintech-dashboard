@@ -56,6 +56,21 @@ entirely inside Wasm.
 - Tests (`wasm/test/`) load the **compiled** module with a fixed seed and check batch sizes, every
   invariant over 100,000 updates, determinism, and that the Wasm limits match the app settings.
 
+## Performance
+
+Measured on the production build at the maximum settings — 50 instruments, 1,000 updates per batch,
+50 ms interval (20,000 updates/s requested) — over 10 seconds in Chrome (desktop):
+
+| Main thread busy                         | Long tasks (> 50 ms) | Frame rate | Heap         |
+| ---------------------------------------- | -------------------- | ---------- | ------------ |
+| ~14 % (script 2 %, layout + style 3.5 %) | none                 | 60 fps     | 6 MB, stable |
+
+The main thread receives one small snapshot per batch (at most 50 rows), never individual updates,
+so its work depends on the number of instruments, not on the update rate. The measured rate was
+~17,400 updates/s: the interval is the _requested_ pause between batches, and each cycle also
+includes the batch itself and timer delay. The producer status shows this actual rate next to the
+requested one.
+
 ## Deployment
 
 Every push runs [GitHub Actions](.github/workflows/ci.yml): install → lint → format check → tests →
@@ -76,10 +91,10 @@ Two GitHub Pages details are handled by `pnpm build:pages`:
 
 ```
 src/app/
-  core/       app-wide domain and singletons (producer settings, message protocol)
-  shared/     reusable UI and pure helpers (display formatting)
+  core/       app-wide domain and singletons (MarketDataService, settings, message protocol)
+  shared/     reusable UI components, form helpers and display formatting
   features/   pages: dashboard, settings
-  worker/     Web Worker logic (batch aggregation)
+  worker/     Web Worker: scheduler, rate meter, Wasm loader, aggregation
 src/testing/  test-only builders, fixtures and helpers (never part of the app bundle)
 src/styles/   design tokens, typography, mixins
 ```
