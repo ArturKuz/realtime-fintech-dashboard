@@ -33,3 +33,11 @@ export function formatImbalance(value: number | null): string {
   }
   return signedTwoDecimals.format(value).replace('-', MINUS_SIGN);
 }
+
+/** Updates per second, rounded to whole updates: 198.4 → "198 updates/s". */
+export function formatRate(rate: number | null): string {
+  if (rate === null) {
+    return UNAVAILABLE;
+  }
+  return `${integer.format(Math.round(rate))} updates/s`;
+}

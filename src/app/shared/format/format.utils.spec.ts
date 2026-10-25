@@ -1,5 +1,5 @@
 import { UNAVAILABLE } from './format.constants';
-import { formatCents, formatImbalance, formatVolume } from './format.utils';
+import { formatCents, formatImbalance, formatRate, formatVolume } from './format.utils';
 
 describe('formatCents', () => {
   it('formats the worked example as US dollars', () => {
@@ -67,5 +67,17 @@ describe('formatImbalance', () => {
 
   it('shows the unavailable mark for null', () => {
     expect(formatImbalance(null)).toBe(UNAVAILABLE);
+  });
+});
+
+describe('formatRate', () => {
+  it('shows whole updates per second with thousands separators', () => {
+    expect(formatRate(200)).toBe('200 updates/s');
+    expect(formatRate(198.4)).toBe('198 updates/s');
+    expect(formatRate(20000)).toBe('20,000 updates/s');
+  });
+
+  it('shows the unavailable mark for null (not measured yet)', () => {
+    expect(formatRate(null)).toBe(UNAVAILABLE);
   });
 });
