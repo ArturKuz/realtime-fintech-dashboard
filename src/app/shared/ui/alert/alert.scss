@@ -1,0 +1,24 @@
+@use 'mixins';
+
+:host {
+  @include mixins.panel;
+
+  --alert-color: var(--color-border-strong);
+
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--alert-color);
+}
+
+:host(.alert--error) {
+  --alert-color: var(--color-negative);
+}
+
+.alert__heading {
+  font-weight: var(--font-weight-semibold);
+}
+
+:host(.alert--error) .alert__heading {
+  color: var(--color-negative);
+}
